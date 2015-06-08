@@ -6,6 +6,8 @@
 # Folders
 _obj
 _test
+bower_components
+node_modules
 
 # Architecture specific extensions/prefixes
 *.[568vq]
@@ -25,3 +27,7 @@ _testmain.go
 
 # Binaries
 chitchat
+
+# Compiled assets
+public/css/*.css
+public/js/*.js
