@@ -29,8 +29,8 @@ _testmain.go
 chitchat
 
 # Compiled assets
-public/css/*.css
-public/js/*.js
+public/assets/css/*.css
+public/assets/js/*.js
 
 # Sessions
 session_*

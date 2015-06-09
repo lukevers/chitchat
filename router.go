@@ -43,3 +43,23 @@ func route() {
 	// Listen and serve
 	s.ListenAndServe()
 }
+
+// Add all routes
+func addRoutes() {
+	// Public routes
+	router.GET("/signup", getSignUp)
+	router.POST("/signup", postSignUp)
+	router.GET("/login", getLogin)
+	router.POST("/login", postLogin)
+	router.GET("/logout", getLogout)
+
+	// Authorized user routes
+	private := router.Group("/")
+	private.Use(LoggedIn())
+	{
+		private.GET("/", getIndex)
+	}
+
+	// Websocket routes
+	router.GET("/ws", handleWsRoute)
+}

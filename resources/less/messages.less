@@ -1,0 +1,29 @@
+.messages {
+	position: absolute;
+	top: 0;
+	left: 151px;
+	width: calc(~"100% - 151px");
+	height: 100%;
+	overflow: auto;
+
+	.msg {
+		border-bottom: 1px solid @light;
+		margin: 15px;
+		display: table;
+
+		.username {
+			display: table-cell;
+			padding-right: 5px;
+			padding-bottom: 5px;
+
+			&::after {
+				content: ":";
+			}
+		}
+
+		.message {
+			display: table-cell;
+			width: 100%;
+		}
+	}
+}

@@ -7,23 +7,6 @@ import (
 	"net/http"
 )
 
-// Add all routes
-func addRoutes() {
-	// Public routes
-	router.GET("/signup", getSignUp)
-	router.POST("/signup", postSignUp)
-	router.GET("/login", getLogin)
-	router.POST("/login", postLogin)
-	router.GET("/logout", getLogout)
-
-	// Authorized user routes
-	private := router.Group("/")
-	private.Use(LoggedIn())
-	{
-		private.GET("/", getIndex)
-	}
-}
-
 // Get Sign Up
 func getSignUp(c *gin.Context) {
 	c.HTML(http.StatusOK, "signup", nil)

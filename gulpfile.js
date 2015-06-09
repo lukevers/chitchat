@@ -36,7 +36,7 @@ gulp.task('js', function() {
 	return gulp.src([
 			// Bower JavaScript Files
 
-			// TODO
+			'jquery/dist/jquery.min.js',
 
 		].map(function(str) { return './bower_components/' + str }).concat([
 			// Asset JavaScript Files

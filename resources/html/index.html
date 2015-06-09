@@ -2,7 +2,12 @@
 
 {{ template "header" . }}
 
-you're logged in!!
+<div class="users"></div>
+<div class="messages" id="messages"></div>
+
+<div class="text">
+	<input type="text" name="message" id="message" autocomplete="off" placeholder="Message..." autofocus>
+</div>
 
 {{ template "footer" . }}
 
