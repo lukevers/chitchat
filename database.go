@@ -3,8 +3,8 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/rubenv/sql-migrate"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/rubenv/sql-migrate"
 	"os"
 	"strings"
 )

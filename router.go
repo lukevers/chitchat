@@ -18,6 +18,15 @@ func route() {
 	// Create our web server
 	router = gin.Default()
 
+	// Add our static file routes
+	router.Static("/assets", "./public/assets/")
+
+	// Compile html templates
+	router.LoadHTMLGlob("resources/html/*.html")
+
+	// Add routes
+	addRoutes()
+
 	// Figure out host:port
 	addr := fmt.Sprintf("%s:%d", *host, *port)
 

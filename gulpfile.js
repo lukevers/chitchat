@@ -46,7 +46,7 @@ gulp.task('js', function() {
 		].map(function(str) { return './resources/js/' + str })))
 		.pipe(concat('scripts.js'))
 		.pipe(uglify())
-		.pipe(gulp.dest('./public/assets/javascript'));
+		.pipe(gulp.dest('./public/assets/js'));
 });
 
 // Watch Task
