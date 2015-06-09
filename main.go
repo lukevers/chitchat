@@ -11,6 +11,9 @@ func main() {
 	// Connect to database
 	dbconnect()
 
+	// Set user session storage
+	setUserSessionStorage()
+
 	// Setup router and webserver
 	route()
 }

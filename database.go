@@ -10,6 +10,7 @@ import (
 )
 
 var db *sql.DB
+var err error
 
 func dbconnect() {
 	// Check to see if *database contains ?parseTime=true because if it does
@@ -19,7 +20,7 @@ func dbconnect() {
 	}
 
 	// Connect to database
-	db, err := sql.Open("mysql", *database)
+	db, err = sql.Open("mysql", *database)
 	if err != nil {
 		fmt.Printf("Error connecting to database: %s\n", err)
 		os.Exit(1)

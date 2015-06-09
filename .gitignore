@@ -31,3 +31,6 @@ chitchat
 # Compiled assets
 public/css/*.css
 public/js/*.js
+
+# Sessions
+session_*
