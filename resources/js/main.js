@@ -21,11 +21,14 @@ function bindEnterKeyToSend() {
 		// Only if the enter key was pressed
 		if (e.which == 13) {
 			// First let's get the message
-			var message = $(this).val();
-			// Then let's clear the input since we are sending it
-			$(this).val("");
-			// Send message to server
-			send(message);
+			var message = $(this).val().trim();
+			// Make sure message isn't empty
+			if (message !== "") {
+				// Then let's clear the input since we are sending it
+				$(this).val("");
+				// Send message to server
+				send(message);
+			}
 		}
 	});
 }

@@ -12,11 +12,6 @@ var ws = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
-type Message struct {
-	Username string
-	Message  string
-}
-
 func handleWsRoute(c *gin.Context) {
 	wshandler(c.Writer, c.Request)
 }
