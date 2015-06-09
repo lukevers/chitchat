@@ -13,7 +13,7 @@ Take the time that you need, but fast is better than slow.
 Conceptually, the service should have five high-level capabilties:
 
  - [ ] Connect
- - [ ] Login
+ - [x] Login
  - [ ] Send Message
  - [ ] Receive Message (push)
  - [ ] Fetch Message History
