@@ -14,7 +14,7 @@ func LoggedIn() gin.HandlerFunc {
 		// Get session
 		session, err := store.Get(c.Request, "user")
 		if err != nil {
-			fmt.Printf("Could not check for session: %s\n", err)
+			fmt.Println("Could not check for session: %s", err)
 		}
 
 		// Check to see if session exists or not

@@ -22,14 +22,14 @@ func dbconnect() {
 	// Connect to database
 	db, err = sql.Open("mysql", *database)
 	if err != nil {
-		fmt.Printf("Error connecting to database: %s\n", err)
+		fmt.Println("Error connecting to database: %s", err)
 		os.Exit(1)
 	}
 
 	// Ping the database
 	err = db.Ping()
 	if err != nil {
-		fmt.Printf("Error pinging database: %s\n", err)
+		fmt.Println("Error pinging database: %s", err)
 		os.Exit(2)
 	}
 
@@ -41,7 +41,7 @@ func dbconnect() {
 	// Run migrations
 	n, err := migrate.Exec(db, "mysql", migrations, migrate.Up)
 	if err != nil {
-		fmt.Printf("Error running database migrations: %s\n", err)
+		fmt.Println("Error running database migrations: %s", err)
 		os.Exit(3)
 	} else {
 		if n == 0 {

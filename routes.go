@@ -50,7 +50,7 @@ func postSignUp(c *gin.Context) {
 		// Username is available! Prepare an insert statement.
 		stmt, err := db.Prepare("INSERT INTO users(username, password) VALUES(?, ?)")
 		if err != nil {
-			fmt.Printf("Error preparing database statement: %s\n", err)
+			fmt.Println("Error preparing database statement: %s", err)
 		}
 
 		// Hash the password.

@@ -50,7 +50,7 @@ func GetAllUsers() (users []User) {
 func HashPassword(password string) string {
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		fmt.Printf("Error generating hash from password: %s\n", err)
+		fmt.Println("Error generating hash from password: %s", err)
 	}
 
 	return string(hash)
