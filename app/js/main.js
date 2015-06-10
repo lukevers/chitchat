@@ -86,5 +86,11 @@ function sendMessage(message) {
 // Receive data
 function receive(data) {
 	data = JSON.parse(data.data);
-	$('#messages-'+data.Receiver).append(buildMessage(data.Sender, data.Message));
+	console.log(data);
+
+	if (data.Original) {
+		$('#messages-'+data.Receiver).append(buildMessage(data.Sender, data.Message));
+	} else {
+		$('#messages-'+data.Sender).append(buildMessage(data.Sender, data.Message));
+	}
 }

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/gorilla/websocket"
-	"github.com/gin-gonic/gin"
 	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 )
 
 var ws = websocket.Upgrader{
@@ -13,6 +13,7 @@ var ws = websocket.Upgrader{
 
 type Conn struct {
 	conn *websocket.Conn
+	id   uint
 }
 
 var connections []*Conn
@@ -40,6 +41,7 @@ func handleWsRoute(c *gin.Context) {
 	// Add the connection to the list
 	connections = append(connections, &Conn{
 		conn: conn,
+		id:   user.Id,
 	})
 
 	// Prepare insert statements for new messages
@@ -66,13 +68,17 @@ func handleWsRoute(c *gin.Context) {
 		// Add a new message into the database
 		stmt.Exec(user.Id, receiver.Id, event.Message.Message)
 
-		// Broadcast to everyone currently.
+		// Broadcast
 		for _, c := range connections {
-			c.conn.WriteJSON(&Message{
-				Sender: user.Username,
-				Message: event.Message.Message,
-				Receiver: event.Message.Receiver,
-			})
+			// We only want to send to the sender and the receiver
+			if c.id == user.Id || c.id == receiver.Id {
+				c.conn.WriteJSON(&Message{
+					Sender:   user.Username,
+					Message:  event.Message.Message,
+					Receiver: event.Message.Receiver,
+					Original: c.id == user.Id,
+				})
+			}
 		}
 	}
 }

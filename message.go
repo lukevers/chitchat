@@ -4,6 +4,7 @@ type Message struct {
 	Sender   string
 	Receiver string
 	Message  string
+	Original bool
 }
 
 type Event struct {

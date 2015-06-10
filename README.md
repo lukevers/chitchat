@@ -8,8 +8,8 @@ Conceptually, the service should have five high-level capabilties:
 
  - [x] Connect
  - [x] Login
- - [ ] Send Message
- - [ ] Receive Message (push)
+ - [x] Send Message
+ - [x] Receive Message (push)
  - [ ] Fetch Message History
 
 ### Service requirements
