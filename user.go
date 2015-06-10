@@ -13,11 +13,36 @@ var store *sessions.FilesystemStore
 
 // Database structure of the users table
 type User struct {
-	id        uint
-	username  string
+	Id        uint
+	Username  string
 	password  string
-	createdAt time.Time
-	updatedAt time.Time
+	CreatedAt time.Time
+	UpdatedAt time.Time
+}
+
+// Get a User struct from the database by a username string
+func GetUser(username string) (user User) {
+	db.QueryRow("SELECT id, username, password, created_at, updated_at FROM users WHERE username=?", username).
+		Scan(&user.Id, &user.Username, &user.password, &user.CreatedAt, &user.UpdatedAt)
+	return
+}
+
+// Get all users
+func GetAllUsers() (users []User) {
+	rows, err := db.Query("SELECT id, username, password, created_at, updated_at FROM users")
+	if err != nil {
+		fmt.Println("Error trying to get all users: %s", err)
+	}
+
+	defer rows.Close()
+	for rows.Next() {
+		var user User
+		if err := rows.Scan(&user.Id, &user.Username, &user.password, &user.CreatedAt, &user.UpdatedAt); err == nil {
+			users = append(users, user)
+		}
+	}
+
+	return
 }
 
 // HashPassword is a func that takes a string password and hashes it

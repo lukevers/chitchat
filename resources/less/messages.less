@@ -5,6 +5,11 @@
 	width: calc(~"100% - 151px");
 	height: 100%;
 	overflow: auto;
+	display: none;
+
+	&.active {
+		display: block;
+	}
 
 	.msg {
 		border-bottom: 1px solid @light;

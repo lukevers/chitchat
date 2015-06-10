@@ -5,8 +5,12 @@ var url, ws;
 (function init() {
 	// Figure out current url with `ws` instead of http/https
 	url = location.href.replace(location.protocol.slice(0, -1), 'ws');
+
 	// Create new websocket
 	ws = new WebSocket(url+'ws');
+
+	// Bind changing message category
+	bindMessageSwitch();
 
 	// Bind enter key to send data
 	bindEnterKeyToSend();
@@ -14,6 +18,18 @@ var url, ws;
 	// Bind on message
 	ws.onmessage = receive;
 })();
+
+// Bind message window switch with other users
+function bindMessageSwitch() {
+	$('.users ul li').bind('click', function(e) {
+		$this = $(this);
+		// Don't do anything if you click the active tab
+		if (!$this.hasClass('active')) {
+			// Switch tabs
+			// TODO
+		}
+	});
+}
 
 // Bind enter key to send data
 function bindEnterKeyToSend() {

@@ -19,7 +19,9 @@ func getLogin(c *gin.Context) {
 
 // Get Index
 func getIndex(c *gin.Context) {
-	c.HTML(http.StatusOK, "index", nil)
+	c.HTML(http.StatusOK, "index", gin.H{
+		"users": GetAllUsers(),
+	})
 }
 
 // Get Logout
@@ -66,7 +68,7 @@ func postSignUp(c *gin.Context) {
 func postLogin(c *gin.Context) {
 	// Try and get the user from the database
 	var user User
-	err := db.QueryRow("SELECT username, password FROM users WHERE username=?", c.PostForm("username")).Scan(&user.username, &user.password)
+	err := db.QueryRow("SELECT username, password FROM users WHERE username=?", c.PostForm("username")).Scan(&user.Username, &user.password)
 	if err == sql.ErrNoRows {
 		// Username does not exist, so the login isn't happening.
 		c.Redirect(http.StatusFound, "/login")
@@ -79,7 +81,7 @@ func postLogin(c *gin.Context) {
 			// Password matches, so now we can login.
 			// Create session
 			session, _ := store.New(c.Request, "user")
-			session.Values["username"] = user.username
+			session.Values["username"] = user.Username
 
 			// Save session
 			session.Save(c.Request, c.Writer)

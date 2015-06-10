@@ -2,8 +2,19 @@
 
 {{ template "header" . }}
 
-<div class="users"></div>
-<div class="messages" id="messages"></div>
+<div class="users">
+	<ul>{{ range .users }}
+		<li class="user" data-user="{{ .Username }}">
+			{{ .Username }}
+		</li>
+	{{ end }}</ul>
+</div>
+
+<div class="messages active" id="messages"></div>
+{{ range .users }}
+	<div class="messages" id="messages-{{ .Username }}"></div>
+{{ end }}
+
 
 <div class="text">
 	<input type="text" name="message" id="message" autocomplete="off" placeholder="Message..." autofocus>

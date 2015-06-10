@@ -27,12 +27,22 @@ func handleWsRoute(c *gin.Context) {
 		fmt.Println("Error trying to get session: %s", err)
 	}
 
-	// Figure out who this user is
-	user := session.Values["username"].(string)
+	// Set a session value for our connection id
 	session.Values["conn_id"] = len(connections)
+
+	// Figure out who the user is and get their db row
+	user := GetUser(session.Values["username"].(string))
+
+	fmt.Println(user)
 
 	// Add the connection to the list
 	connections = append(connections, conn)
+
+	// Prepare insert statements for new messages
+	stmt, err := db.Prepare("INSERT INTO messages(sender, receiver, message) VALUES(?, ?, ?)")
+	if err != nil {
+		fmt.Println("Error preparing database statement: %s", err)
+	}
 
 	for {
 		_, msg, err := conn.ReadMessage()
@@ -45,10 +55,13 @@ func handleWsRoute(c *gin.Context) {
 			break
 		}
 
+		// Add a new message into the database
+		stmt.Exec(user.Id, 3, string(msg))
+
 		// Broadcast to everyone currently.
 		for _, c := range connections {
 			c.WriteJSON(&Message{
-				Username: user,
+				Username: user.Username,
 				Message: string(msg),
 			})
 		}
