@@ -6,6 +6,8 @@ import (
 	"github.com/gorilla/sessions"
 	"golang.org/x/crypto/bcrypt"
 	"time"
+	"os"
+	"path/filepath"
 )
 
 // Session store
@@ -64,6 +66,20 @@ func PasswordAndHashMatch(password string, hash string) bool {
 
 // setUserSessionStorage sets the session store for users
 func setUserSessionStorage() {
+	// Clean up old sessions
+	allSessions, err := filepath.Glob(*sessionsPath+"/session_*")
+	if err != nil {
+		fmt.Println("Old sessions were not cleared: %s", err)
+	} else {
+		for _, s := range allSessions {
+			err = os.Remove(s)
+			if err != nil {
+				fmt.Println("Error removing old session: %s", err)
+			}
+		}
+	}
+
+	// Create new session store
 	store = sessions.NewFilesystemStore(
 		// Path to sessions
 		*sessionsPath,
