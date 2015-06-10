@@ -1,6 +1,12 @@
 package main
 
 type Message struct {
-	Username string
+	Sender   string
+	Receiver string
 	Message  string
+}
+
+type Event struct {
+	Type    string
+	Message Message
 }

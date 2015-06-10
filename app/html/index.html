@@ -10,14 +10,13 @@
 	{{ end }}</ul>
 </div>
 
-<div class="messages active" id="messages"></div>
 {{ range .users }}
 	<div class="messages" id="messages-{{ .Username }}"></div>
 {{ end }}
 
 
 <div class="text">
-	<input type="text" name="message" id="message" autocomplete="off" placeholder="Message..." autofocus>
+	<input type="text" name="message" id="message" autocomplete="off" placeholder="Message...">
 </div>
 
 {{ template "footer" . }}

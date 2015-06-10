@@ -19,14 +19,27 @@ var url, ws;
 	ws.onmessage = receive;
 })();
 
+// Active object
+var active = {
+	messages: '',
+};
+
 // Bind message window switch with other users
 function bindMessageSwitch() {
 	$('.users ul li').bind('click', function(e) {
 		$this = $(this);
 		// Don't do anything if you click the active tab
 		if (!$this.hasClass('active')) {
-			// Switch tabs
-			// TODO
+			// Remove active class on other tabs
+			$('.users ul li.active').removeClass('active');
+			// Set the clicked one to active
+			$this.addClass('active');
+			// Remove the active class from the active message window
+			$('.messages.active').removeClass('active');
+			// Add the active class to our active message window
+			$('#messages-'+$this.data('user')).addClass('active');
+			// Set in our active object
+			active.messages = $this.data('user');
 		}
 	});
 }
@@ -39,11 +52,15 @@ function bindEnterKeyToSend() {
 			// First let's get the message
 			var message = $(this).val().trim();
 			// Make sure message isn't empty
-			if (message !== "") {
-				// Then let's clear the input since we are sending it
-				$(this).val("");
-				// Send message to server
-				send(message);
+			if (message !== '') {
+				if (active.messages === '') {
+					alert('You must be in a conversation to send messages');
+				} else {
+					// Then let's clear the input since we are sending it
+					$(this).val('');
+					// Send message to server
+					sendMessage(message);
+				}
 			}
 		}
 	});
@@ -55,13 +72,19 @@ function buildMessage(username, message) {
 }
 
 // Send data
-function send(data) {
-	ws.send(data);
+function sendMessage(message) {
+	ws.send(JSON.stringify({
+		Type: "message",
+		Message: {
+			Sender: "",
+			Receiver: active.messages,
+			Message: message
+		}
+	}));
 }
 
 // Receive data
 function receive(data) {
 	data = JSON.parse(data.data);
-	console.log(data);
-	$('#messages').append(buildMessage(data.Username, data.Message));
+	$('#messages-'+data.Receiver).append(buildMessage(data.Sender, data.Message));
 }

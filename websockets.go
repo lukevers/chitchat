@@ -45,7 +45,8 @@ func handleWsRoute(c *gin.Context) {
 	}
 
 	for {
-		_, msg, err := conn.ReadMessage()
+		var event Event
+		err := conn.ReadJSON(&event)
 		if err != nil {
 			// The connection is being closed
 			i := session.Values["conn_id"].(int)
@@ -55,14 +56,18 @@ func handleWsRoute(c *gin.Context) {
 			break
 		}
 
+		// Figure out who the receiver is
+		receiver := GetUser(event.Message.Receiver)
+
 		// Add a new message into the database
-		stmt.Exec(user.Id, 3, string(msg))
+		stmt.Exec(user.Id, receiver.Id, event.Message.Message)
 
 		// Broadcast to everyone currently.
 		for _, c := range connections {
 			c.WriteJSON(&Message{
-				Username: user.Username,
-				Message: string(msg),
+				Sender: user.Username,
+				Message: event.Message.Message,
+				Receiver: event.Message.Receiver,
 			})
 		}
 	}
