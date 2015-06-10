@@ -57,9 +57,10 @@ func addRoutes() {
 	private := router.Group("/")
 	private.Use(LoggedIn())
 	{
+		// HTML
 		private.GET("/", getIndex)
-	}
 
-	// Websocket routes
-	router.GET("/ws", handleWsRoute)
+		// WebSocket
+		private.GET("/ws", handleWsRoute)
+	}
 }
