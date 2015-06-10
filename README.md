@@ -29,7 +29,7 @@ gulp
 
 With all defaults:
 
-```
+```bash
 # Development mode
 ./chitchat
 
