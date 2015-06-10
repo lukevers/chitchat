@@ -1,13 +1,16 @@
+@user-width: 150px;
+
 .users {
 	position: absolute;
 	height: 100%;
-	width: 150px;
+	width: @user-width;
 	background-color: @base;
 	color: @white;
 
 	ul {
 		margin: 0;
 		padding: 0;
+		padding-top: 35px;
 
 		li {
 			list-style: none;
@@ -17,6 +20,16 @@
 
 			&.active {
 				background-color: darken(@base, 4%);
+			}
+
+			&.authed {
+				position: absolute;
+				top: 0;
+				width: @user-width - 20px;
+
+				&::before {
+					content: "*";
+				}
 			}
 		}
 	}

@@ -60,6 +60,9 @@ func addRoutes() {
 		// HTML
 		private.GET("/", getIndex)
 
+		// Load Messages
+		private.GET("/messages/:user1/:user2", getOldMessages)
+
 		// WebSocket
 		private.GET("/ws", handleWsRoute)
 	}

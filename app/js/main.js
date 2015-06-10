@@ -9,6 +9,12 @@ var url, ws;
 	// Create new websocket
 	ws = new WebSocket(url+'ws');
 
+	// Add own class to autged user
+	AddClassToAuthedUser();
+
+	// Load all old messages
+	LoadMessages();
+
 	// Bind changing message category
 	bindMessageSwitch();
 
@@ -18,11 +24,6 @@ var url, ws;
 	// Bind on message
 	ws.onmessage = receive;
 })();
-
-// Active object
-var active = {
-	messages: '',
-};
 
 // Bind message window switch with other users
 function bindMessageSwitch() {
@@ -93,4 +94,26 @@ function receive(data) {
 	} else {
 		$('#messages-'+data.Sender).append(buildMessage(data.Sender, data.Message));
 	}
+}
+
+// Load Messages
+function LoadMessages() {
+	$('.users ul li.user').map(function(i, v) {
+		var user = $(v).data('user');
+		$.getJSON('/messages/'+active.user+'/'+user, function(data) {
+			data.map(function(msg) {
+				console.log(msg);
+				if (msg.Sender === active.user) {
+					$('#messages-'+msg.Receiver).append(buildMessage(msg.Sender, msg.Message));
+				} else {
+					$('#messages-'+msg.Sender).append(buildMessage(msg.Sender, msg.Message));
+				}
+			});
+		});
+	});
+}
+
+//
+function AddClassToAuthedUser() {
+	$('.users ul li.user[data-user="'+active.user+'"]').addClass('authed');
 }

@@ -19,8 +19,15 @@ func getLogin(c *gin.Context) {
 
 // Get Index
 func getIndex(c *gin.Context) {
+	session, err := store.Get(c.Request, "user")
+	if err != nil {
+		fmt.Println("Could not check for session: %s", err)
+	}
+
+	// Render HTML
 	c.HTML(http.StatusOK, "index", gin.H{
-		"users": GetAllUsers(),
+		"username": session.Values["username"],
+		"users":   GetAllUsers(),
 	})
 }
 

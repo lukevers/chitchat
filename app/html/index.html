@@ -2,6 +2,8 @@
 
 {{ template "header" . }}
 
+<script>var active = { messages: '', user: {{ .username }} };</script>
+
 <div class="users">
 	<ul>{{ range .users }}
 		<li class="user" data-user="{{ .Username }}">
