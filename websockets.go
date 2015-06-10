@@ -11,7 +11,11 @@ var ws = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
-var connections []*websocket.Conn
+type Conn struct {
+	conn *websocket.Conn
+}
+
+var connections []*Conn
 
 func handleWsRoute(c *gin.Context) {
 	// Upgrade the connection to a websocket connection
@@ -36,7 +40,9 @@ func handleWsRoute(c *gin.Context) {
 	fmt.Println(user)
 
 	// Add the connection to the list
-	connections = append(connections, conn)
+	connections = append(connections, &Conn{
+		conn: conn,
+	})
 
 	// Prepare insert statements for new messages
 	stmt, err := db.Prepare("INSERT INTO messages(sender, receiver, message) VALUES(?, ?, ?)")
@@ -64,7 +70,7 @@ func handleWsRoute(c *gin.Context) {
 
 		// Broadcast to everyone currently.
 		for _, c := range connections {
-			c.WriteJSON(&Message{
+			c.conn.WriteJSON(&Message{
 				Sender: user.Username,
 				Message: event.Message.Message,
 				Receiver: event.Message.Receiver,
