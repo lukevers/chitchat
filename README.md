@@ -2,6 +2,49 @@
 
 A basic websocket-based chat service written in Go
 
+## Building
+
+You need the following:
+
+- [Go](http://golang.org/)
+- [Node](https://nodejs.org/)
+- [NPM](https://www.npmjs.com/)
+- [Bower](http://bower.io/)
+- [Gulp](http://gulpjs.com/)
+
+```bash
+# Build our application
+go get
+go build
+
+# Install assets
+npm install
+bower install
+
+# Compile/minify assets
+gulp
+```
+
+## Running
+
+With all defaults:
+
+```
+# Development mode
+./chitchat
+
+# Production mode
+./chitchat --production
+```
+
+There are flags that you can pass, and will probably have to at least for your database.
+
+You can view them all in `flags.go` or pass the `--help` flag to the application.
+
+```bash
+./chitchat --help
+```
+
 ## Tasks
 
 Conceptually, the service should have five high-level capabilties:
