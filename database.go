@@ -35,7 +35,7 @@ func dbconnect() {
 
 	// Setup migrations
 	migrations := &migrate.FileMigrationSource{
-		Dir: "database/migrations",
+		Dir: "app/database/migrations",
 	}
 
 	// Run migrations

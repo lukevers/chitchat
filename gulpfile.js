@@ -9,7 +9,7 @@ var minify = require('gulp-minify-css');
 // Less Task
 
 gulp.task('less', function() {
-	return gulp.src('./resources/less/main.less')
+	return gulp.src('./app/less/main.less')
 		.pipe(less())
 		.pipe(concat('style.css'))
 		.pipe(minify())
@@ -43,7 +43,7 @@ gulp.task('js', function() {
 
 			'main.js',
 
-		].map(function(str) { return './resources/js/' + str })))
+		].map(function(str) { return './app/js/' + str })))
 		.pipe(concat('scripts.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest('./public/assets/js'));
@@ -54,8 +54,8 @@ gulp.task('js', function() {
 gulp.task('watch', function() {
 	var watch   = require('gulp-watch');
 
-	gulp.watch('resources/js/*.js', ['js']);
-	gulp.watch('resources/less/*.less', ['less']);
+	gulp.watch('app/js/*.js', ['js']);
+	gulp.watch('app/less/*.less', ['less']);
 });
 
 // Default Task

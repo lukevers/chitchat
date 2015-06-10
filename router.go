@@ -22,7 +22,7 @@ func route() {
 	router.Static("/assets", "./public/assets/")
 
 	// Compile html templates
-	router.LoadHTMLGlob("resources/html/*.html")
+	router.LoadHTMLGlob("app/html/*.html")
 
 	// Add routes
 	addRoutes()

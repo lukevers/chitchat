@@ -34,3 +34,6 @@ public/assets/js/*.js
 
 # Sessions
 session_*
+
+# OS X Files
+.DS_Store
