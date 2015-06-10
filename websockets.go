@@ -37,8 +37,6 @@ func handleWsRoute(c *gin.Context) {
 	// Figure out who the user is and get their db row
 	user := GetUser(session.Values["username"].(string))
 
-	fmt.Println(user)
-
 	// Add the connection to the list
 	connections = append(connections, &Conn{
 		conn: conn,
